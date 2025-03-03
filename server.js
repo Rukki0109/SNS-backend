@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const userRoute = require("./routes/users")
 const authRoute = require("./routes/auth")
@@ -10,6 +11,13 @@ const PORT = process.env.PORT || 5000;
 const mongoose = require("mongoose");
 const path = require("path");
 require("dotenv").config();
+
+// CORS設定: フロントエンドからのリクエストを許可
+app.use(cors({
+    origin: "https://sns-frontend-green.vercel.app", // フロントエンドのVercelのURL
+    methods: ["GET", "POST", "PUT", "DELETE"],  // 許可するメソッド
+    credentials: true  // 認証情報を含むリクエストを許可
+}));
 
 //database connect
 mongoose.connect(process.env.MONGOURL)
