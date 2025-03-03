@@ -5,7 +5,7 @@ const authRoute = require("./routes/auth")
 const postRoute = require("./routes/posts")
 const uploadRoute = require("./routes/upload")
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 const mongoose = require("mongoose");
 const path = require("path");
