@@ -1,0 +1,6 @@
+# Node.js関連の不要ファイル
+node_modules/
+package-lock.json
+
+# 環境変数（セキュリティのために除外）
+.env
