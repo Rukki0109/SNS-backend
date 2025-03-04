@@ -12,12 +12,18 @@ const mongoose = require("mongoose");
 const path = require("path");
 require("dotenv").config();
 
-// CORS設定: フロントエンドからのリクエストを許可
+// CORS設定: ローカルと本番の両方を許可
+const allowedOrigins = [
+    "http://localhost:3000",  // ローカル開発用
+    "https://sns-frontend-green.vercel.app" // 本番環境用
+];
+
 app.use(cors({
-    origin: "https://sns-frontend-green.vercel.app", // フロントエンドのVercelのURL
-    methods: ["GET", "POST", "PUT", "DELETE"],  // 許可するメソッド
+    origin: allowedOrigins,  // 許可するフロントエンドのURLリスト
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true  // 認証情報を含むリクエストを許可
 }));
+
 
 //database connect
 mongoose.connect(process.env.MONGOURL)
