@@ -123,4 +123,17 @@ router.put("/:id/unfollow", async (req, res)=> {
 //     res.send("user router")
 // });
 
+router.get("/:id/followings", async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if (!user) return res.status(404).json("ユーザーが見つかりません");
+
+        const followings = await User.find({ _id: { $in: user.followings } }).select("username profilePicture");
+        return res.status(200).json(followings);
+    } catch (err) {
+        return res.status(500).json(err);
+    }
+});
+
+
 module.exports= router;
