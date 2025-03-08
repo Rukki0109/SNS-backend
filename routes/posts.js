@@ -13,6 +13,17 @@ router.post("/", async (req, res) => {
     }
 });
 
+// 投稿を検索
+router.get("/search", async (req, res) => {
+    try {
+        const query = req.query.q;
+        const posts = await Post.find({ desc: { $regex: query, $options: "i" } }); // 大文字小文字を区別しない検索
+        return res.status(200).json(posts);
+    } catch (err) {
+        return res.status(500).json(err);
+    }
+});
+
 //投稿を更新する
 router.put("/:id", async (req, res) => {
     try {
@@ -114,6 +125,9 @@ router.get("/profile/:username", async (req, res) => {
         res.status(500).json(err);
     }
 });
+
+
+
 
 
 module.exports = router;
