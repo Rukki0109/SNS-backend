@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const User = require("../models/User");
+const Post = require("../models/Post");
 
 //CRUD//
 //ユーザー情報の更新
@@ -130,6 +131,28 @@ router.get("/:id/followings", async (req, res) => {
 
         const followings = await User.find({ _id: { $in: user.followings } }).select("username profilePicture");
         return res.status(200).json(followings);
+    } catch (err) {
+        return res.status(500).json(err);
+    }
+});
+
+// ユーザー情報と投稿数を取得する
+router.get("/:id/stats", async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if (!user) {
+            return res.status(404).json("ユーザーが見つかりません");
+        }
+        const postCount = await Post.countDocuments({ userId: req.params.id });
+
+        const userStats = {
+            username: user.username,
+            followers: user.followers.length,
+            followings: user.followings.length,
+            postCount: postCount,
+        };
+
+        return res.status(200).json(userStats);
     } catch (err) {
         return res.status(500).json(err);
     }
