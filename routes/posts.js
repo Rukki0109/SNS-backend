@@ -126,6 +126,16 @@ router.get("/profile/:username", async (req, res) => {
     }
 });
 
+// いいね済みの投稿を取得
+router.get("/likes/:userId", async (req, res) => {
+    try {
+        const posts = await Post.find({ likes: req.params.userId });
+        return res.status(200).json(posts);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
 
 
 
