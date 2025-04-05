@@ -6,13 +6,14 @@ const authRoute = require("./routes/auth")
 const postRoute = require("./routes/posts")
 const uploadRoute = require("./routes/upload")
 const commentRoute = require("./routes/comments");
-
+const thriftShopRoute = require("./routes/thriftshops");
 
 
 const PORT = process.env.PORT || 5000;
 
 const mongoose = require("mongoose");
 const path = require("path");
+
 require("dotenv").config();
 
 // CORS設定: ローカルと本番の両方を許可
@@ -47,6 +48,8 @@ app.use("/api/auth", authRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/upload", uploadRoute);
 app.use("/api/comments", commentRoute);
+app.use("/api/thriftshops", thriftShopRoute);
+
 
 
 app.get("/",(req, res) => {
